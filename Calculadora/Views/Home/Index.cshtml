@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="span12">
+        <h3>Agregar Deuda</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Tipo de Deuda</th>
+                    <th>Monto Deuda</th>
+                    <th>Cuota Mensual Actual</th>
+                    <th>Tasa de Interes Actual</th>
+                    <th>Cant Meses</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: deudas">
+                <tr>
+                    <td data-bind="text: tipo"></td>
+                    <td data-bind="text: monto"></td>
+                    <td data-bind="text: cuota"></td>
+                    <td data-bind="text: tasaInteres"></td>
+                    <td data-bind="text: meses"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <form class="form-inline">
+                <input type="text" placeholder="Tipo de Deuda" data-bind="value: tipo">
+                <input type="text" placeholder="Monto Deuda" data-bind="value: monto">
+                <input type="text" placeholder="Cuota Mensual" data-bind="value: cuota">
+                <input type="text" placeholder="Tasa Interes" data-bind="value: tasaInteres">
+                <button class="btn btn-success" data-bind="click: addDeuda">Agregar Deuda</button>
+            </form>
+        </p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="span6">
+        <h3>Consolidacion</h3>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Gastos de Cierre</td>
+                    <td data-bind="text: gastosCierre"></td>
+                </tr>
+                <tr>
+                    <td>Monto Nuevo Prestamo</td>
+                    <td data-bind="text: montoNuevoPrestamo"></td>
+                </tr>
+                <tr>
+                    <td><b>Total Costo Consolidacion</b></td>
+                    <td data-bind="text: costoConsolidacion"></td>
+                </tr>
+                <tr>
+                    <td>Pagos Totales Por Mes</td>
+                    <td data-bind="text: pagosPorMes"></td>
+                </tr>
+                <tr>
+                    <td><b>Pago Mensual Nuevo Prestamo</b></td>
+                    <td data-bind="text: pagoNuevoPrestamo"></td>
+                </tr>
+                <tr>
+                    <td>CashFlow Liberado Por Mes</td>
+                    <td data-bind="text: cashFlow"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="span6">
+        <div class="row-fluid">
+            <div class="span12">
+            <h3>Total Deudas</h3>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Total</td>
+                            <td data-bind="text: totalAdeudado"></td>
+                        </tr>
+                        <tr>
+                            <td>Pago Mensual</td>
+                            <td data-bind="text: pagosPorMes"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+            <h3>Condiciones</h3>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Tasa</td>
+                            <td data-bind="text: tasa"></td>
+                        </tr>
+                        <tr>
+                            <td>Duracion en Meses</td>
+                            <td data-bind="text: duracionMeses"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="span12">
+        <h3>Tablas</h3>
+        <div class="tabbable"> <!-- Only required for left/right tabs -->
+            <ul class="nav nav-tabs" data-bind="foreach: tablas()">
+                <li data-bind="css: { active: $root.tablas()[0] === $data }"><a href="#tab2" data-toggle="tab" data-bind="text: title, attr: {href: '#' + title.replace('\\ ', '_') }"></a></li>
+                <!--
+                    <li class="active"><a href="#tab1" data-toggle="tab">Consolidacion</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Tablas</a></li> -->
+            </ul>
+            <div class="tab-content" data-bind="foreach: tablas()">
+                <div class="tab-pane" id="tab1" data-bind="attr: { id: title.replace('\\ ', '_') }, css: { active: $root.tablas()[0] === $data }">
+                    <table class="table table-striped" data-bind="visible: tabla.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Balance Partida</th>
+                                <th>Pago Mensual</th>
+                                <th>Principal</th>
+                                <th>Interes</th>
+                                <th>Balance de Salida</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: tabla">
+                            <tr>
+                                <td data-bind="text: mes"></td>
+                                <td data-bind="text: balancePartida.toFixed(2)"></td>
+                                <td data-bind="text: pagoMensual.toFixed(2)"></td>
+                                <td data-bind="text: principal.toFixed(2)"></td>
+                                <td data-bind="text: interes.toFixed(2)"></td>
+                                <td data-bind="text: balanceSalida.toFixed(2)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="alert" data-bind="visible: tabla.length == 0">Debe agregar una deuda para calcular la consolidacion.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
